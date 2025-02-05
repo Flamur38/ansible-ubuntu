@@ -21,11 +21,13 @@
     allow_bold = False
     visible_bell = True
     icon_bell = False
+    background_color = "#0a0a0a"
     background_darkness = 0.95
     background_image = /home/kali/Pictures/kali-logo.png
     background_image_mode = tiling
     cursor_shape = ibeam
     font = Monospace 11
+    foreground_color = "#c5d1eb"
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_infinite = True
@@ -35,11 +37,11 @@
     allow_bold = False
     visible_bell = True
     icon_bell = False
-    background_color = "#141d2b"
+    background_color = "#002b36"
     font = Monospace 11
-    foreground_color = "#a4b1cd"
+    foreground_color = "#839496"
     show_titlebar = False
-    palette = "#000000:#ff3e3e:#c5ea8b:#b57c00:#0086ff:#9f00ff:#00d49c:#ffffff:#aaaaaa:#ff5d5d:#c5ea8b:#ffaf00:#2c9bff:#ac24fe:#2ee7b6:#ffffff"
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#268bd2:#6c71c4:#93a1a1:#fdf6e3"
     use_system_font = False
 [layouts]
   [[default]]

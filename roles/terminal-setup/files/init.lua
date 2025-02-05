@@ -56,3 +56,5 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Apply the Hack The Box Theme
 vim.cmd('colorscheme hackthebox')
 
+-- Set Jet Black background
+vim.cmd('hi Normal guibg=#0A0A0A')  -- Set background to Jet Black (#0A0A0A)
