@@ -9,7 +9,6 @@
       - curl
       - terminator
       - nmap
-      - metasploit-framework
       - nikto
       - sqlmap
       - python3

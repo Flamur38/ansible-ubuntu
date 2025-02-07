@@ -28,11 +28,9 @@
     },
     "Extensions": {
       "Install": [
-        "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi",
-        "https://addons.mozilla.org/firefox/downloads/latest/foxyproxy-standard/latest.xpi",
-        "https://addons.mozilla.org/firefox/downloads/latest/wappalyzer/latest.xpi",
-        "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger/latest.xpi",
-        "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
+        {% for item in FirefoxPlugins %}
+        "https://addons.mozilla.org/firefox/downloads/latest/{{ item }}/latest.xpi"{{ "," if not loop.last }}
+        {% endfor %}
       ]
     }
   }
