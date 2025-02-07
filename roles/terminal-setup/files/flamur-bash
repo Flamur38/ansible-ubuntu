@@ -1,6 +1,6 @@
 [/]
 allow-bold=false
-background-color='#0A0A0A0A0A0A'
+background-color='#181818181818'
 background-darkness=0.90784313725490196
 background-image=''
 background-type='solid'
@@ -16,10 +16,10 @@ default-size-columns=80
 default-size-rows=30
 delete-binding='escape-sequence'
 exit-action='close'
-font='Monospace 11'
+font='Monospace 12'
 foreground-color='#A6A6AEAED1D1'
 login-shell=false
-palette='#C5C5D1D1EBEB:#FFFF84848484:#C5C5F4F46767:#FFFFAFAF0000:#2E2E6C6CFFFF:#9F9E0000FFFF:#2E2EE7E7B6B6:#EEEEEEEEECEC:#F3F3F3F3F3F3:#FFFF84848484:#C5C5F4F46767:#FFFFCCCC5C5C:#5C5CB2B2FFFF:#CFCE8D8DFBFB:#5C5CECECC6C5:#EEEEEEEEECEC'
+palette='#000000000000:#FFFF84848484:#C5C5F4F46767:#FFFFAFAF0000:#2E2E6C6CFFFF:#9F9E0000FFFF:#2E2EE7E7B6B6:#EEEEEEEEECEC:#F3F3F3F3F3F3:#FFFF84848484:#C5C5F4F46767:#FFFFCCCC5C5C:#5C5CB2B2FFFF:#CFCE8D8DFBFB:#5C5CECECC6C5:#EEEEEEEEECEC'
 scroll-background=true
 scroll-on-keystroke=true
 scroll-on-output=false
