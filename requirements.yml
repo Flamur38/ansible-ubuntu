@@ -1,4 +1,4 @@
 ---
 collections:
   - name: ansible.builtin
-
+  - src: gantsign.visual-studio-code
