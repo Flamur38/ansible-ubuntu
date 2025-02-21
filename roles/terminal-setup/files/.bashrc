@@ -164,6 +164,11 @@ alias nmapref='clear ; cat $HOME/references/nmapref'
 #export PS1="$PS1\[\033[0;32m\]"
 #trap 'echo -ne "\033[0m"' DEBUG
 
+# add this to .bash_profile
+#if [ -f ~/.bashrc ]; then
+#    source ~/.bashrc
+#fi
+
 bind 'set completion-ignore-case on'
 alias vi='/usr/local/bin/nvim'
 

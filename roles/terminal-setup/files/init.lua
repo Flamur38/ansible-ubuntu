@@ -27,7 +27,20 @@ require("packer").startup(function(use)
     use "hrsh7th/nvim-cmp"               -- Autocompletion
     use "L3MON4D3/LuaSnip"               -- Snippet engine
     use 'ThePrimeagen/vim-be-good'       -- Practice Vim movements
-    use 'audibleblink/hackthebox.vim'    -- Hack The Box theme
+    use {
+        'rose-pine/neovim',
+        as = 'rose-pine', -- Optional: Set an alias for the plugin
+        config = function()
+            require('rose-pine').setup({
+                variant = 'rose-pine', -- Options: 'rose-pine', 'rose-pine-moon', 'rose-pine-dawn'
+                disable_background = true, -- Set to true for transparent background
+                disable_float_background= true, -- Set to true for transparent floats
+            })
+            vim.cmd('colorscheme rose-pine') -- Set the colorscheme
+        end
+    }
+
+
 end)
 
 -- Treesitter configuration
@@ -53,8 +66,3 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
--- Apply the Hack The Box Theme
-vim.cmd('colorscheme hackthebox')
-
--- Set Jet Black background
-vim.cmd('hi Normal guibg=#0A0A0A')  -- Set background to Jet Black (#0A0A0A)
