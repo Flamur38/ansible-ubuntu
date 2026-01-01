@@ -1,0 +1,19 @@
+- name: Install tmux
+  apt:
+    name: tmux
+    state: present
+
+- name: Install TPM (Tmux Plugin Manager)
+  become: true
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
+    update: no
+
+- name: Deploy .tmux.conf
+  become: true
+  copy:
+    src: .tmux.conf
+    dest: "{{ ansible_env.HOME }}/.tmux.conf"
+    mode: '0644'
+
