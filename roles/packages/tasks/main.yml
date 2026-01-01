@@ -1,0 +1,12 @@
+- name: Install common user packages
+  apt:
+    name:
+      - htop
+      - neofetch
+      - ripgrep
+      - fd-find
+      - jq
+      - flameshot
+      - terminator
+    state: present
+

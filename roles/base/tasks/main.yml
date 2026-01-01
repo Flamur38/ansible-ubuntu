@@ -17,3 +17,22 @@
       - unzip
     state: present
 
+
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Generate locale
+  locale_gen:
+    name: "{{ locale }}"
+    state: present
+
+- name: Set system locale
+  command: localectl set-locale LANG={{ locale }}
+  changed_when: false
+
+- name: Set hostname (optional)
+  hostname:
+    name: "{{ hostname }}"
+  when: hostname | length > 0
+
