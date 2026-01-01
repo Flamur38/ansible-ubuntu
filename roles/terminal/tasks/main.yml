@@ -2,19 +2,19 @@
   become: true
   copy:
     src: .bashrc
-    dest: "{{ ansible_env.HOME }}/.bashrc"
+    dest: "{{ ansible_env.SUDO_USER }}/.bashrc"
     mode: '0644'
 
 - name: Deploy .bash_aliases
   become: true
   copy:
     src: .bash_aliases
-    dest: "{{ ansible_env.HOME }}/.bash_aliases"
+    dest: "{{ ansible_env.SUDO_USER }}/.bash_aliases"
     mode: '0644'
 
 - name: Deploy .bash_profile
   become: true
   copy:
     src: .bash_profile
-    dest: "{{ ansible_env.HOME }}/.bash_profile"
+    dest: "{{ ansible_env.SUDO_USER }}/.bash_profile"
     mode: '0644'

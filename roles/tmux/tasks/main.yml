@@ -7,13 +7,13 @@
   become: true
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
+    dest: "{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
     update: no
 
 - name: Deploy .tmux.conf
   become: true
   copy:
     src: .tmux.conf
-    dest: "{{ ansible_env.HOME }}/.tmux.conf"
+    dest: "{{ ansible_env.SUDO_USER }}/.tmux.conf"
     mode: '0644'
 
