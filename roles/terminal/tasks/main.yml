@@ -1,0 +1,20 @@
+- name: Deploy .bashrc
+  become: false
+  copy:
+    src: .bashrc
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    mode: '0644'
+
+- name: Deploy .bash_aliases
+  become: false
+  copy:
+    src: .bash_aliases
+    dest: "{{ ansible_env.HOME }}/.bash_aliases"
+    mode: '0644'
+
+- name: Deploy .bash_profile
+  become: false
+  copy:
+    src: .bash_profile
+    dest: "{{ ansible_env.HOME }}/.bash_profile"
+    mode: '0644'
