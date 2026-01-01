@@ -1,0 +1,7 @@
+- name: Personal Ubuntu Setup
+  hosts: localhost
+  become: true
+
+  roles:
+    - base
+
