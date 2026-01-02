@@ -1,0 +1,13 @@
+{
+  "policies": {
+    "Extensions": {
+      "Install": [
+        "https://addons.mozilla.org/firefox/downloads/latest/ubuntu-yaru-dark-matte/latest.xpi"
+      ],
+      "Locked": [
+        "ubuntu-yaru-dark-matte@mozilla.org"
+      ]
+    }
+  }
+}
+

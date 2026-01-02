@@ -1,41 +1,19 @@
 # --------------------------------------------------
-# Install NSS tools (for Firefox cert import)
+# Firefox ESR: apply Ubuntu Yaru Dark Matte theme
 # --------------------------------------------------
-- name: Install NSS tools
+
+- name: Ensure Firefox ESR policies directory exists
   become: true
-  apt:
-    name: libnss3-tools
-    state: present
+  file:
+    path: /etc/firefox-esr/policies
+    state: directory
+    mode: '0755'
 
-# --------------------------------------------------
-# Find Firefox profile directory
-# --------------------------------------------------
-- name: Locate Firefox profiles directory
-  become: false
-  find:
-    paths: "/home/{{ ansible_env.SUDO_USER }}/.mozilla/firefox"
-    patterns: "*.default*"
-    file_type: directory
-  register: firefox_profiles
-
-# --------------------------------------------------
-# Fail if no Firefox profile exists
-# --------------------------------------------------
-- name: Ensure Firefox profile exists
-  fail:
-    msg: "No Firefox profile found. Start Firefox once before running this role."
-  when: firefox_profiles.matched == 0
-
-# --------------------------------------------------
-# Import Burp CA certificate
-# --------------------------------------------------
-- name: Import Burp CA into Firefox
-  become: false
-  command: >
-    certutil -A
-    -n "Burp Suite CA"
-    -t "C,," 
-    -i "{{ role_path }}/files/burp-ca.der"
-    -d sql:{{ firefox_profiles.files[0].path }}
-  args:
-    creates: "{{ firefox_profiles.files[0].path }}/cert9.db"
+- name: Deploy Firefox ESR policies.json (Yaru Dark Matte theme)
+  become: true
+  copy:
+    src: policies.json
+    dest: /etc/firefox-esr/policies/policies.json
+    owner: root
+    group: root
+    mode: '0644'
