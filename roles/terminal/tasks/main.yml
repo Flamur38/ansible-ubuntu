@@ -40,12 +40,12 @@
     org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
     use-system-font false
 
-- name: Set font to Monospace 15
+- name: Set font to Monospace 17
   become: false
   command: >
     gsettings set
     org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    font 'Monospace 15'
+    font 'Monospace 17'
 
 - name: Disable theme colors
   become: false

@@ -1,63 +1,81 @@
-# --------------------------------------------------
-# Remove Ubuntu Snap Firefox
-# --------------------------------------------------
+# ==================================================
+# Firefox ESR (official Mozilla tarball, snap-proof)
+# ==================================================
+
+- name: Ensure /opt exists
+  become: true
+  file:
+    path: /opt
+    state: directory
+    mode: '0755'
+
+- name: Remove any previous Firefox install in /opt
+  become: true
+  file:
+    path: /opt/firefox
+    state: absent
+
+- name: Download Firefox ESR tarball (official Mozilla)
+  become: true
+  get_url:
+    url: "https://download.mozilla.org/?product=firefox-esr-latest&os=linux64&lang=en-US"
+    dest: /tmp/firefox-esr.tar.bz2
+    mode: '0644'
+    force: true
+
+- name: Extract Firefox ESR into /opt
+  become: true
+  unarchive:
+    src: /tmp/firefox-esr.tar.bz2
+    dest: /opt
+    remote_src: true
+    creates: /opt/firefox/firefox
+  when: not ansible_check_mode
+
+- name: Create firefox-esr symlink
+  become: true
+  file:
+    src: /opt/firefox/firefox
+    dest: /usr/local/bin/firefox-esr
+    state: link
+    force: true
+
+- name: Make firefox command use ESR
+  become: true
+  file:
+    src: /usr/local/bin/firefox-esr
+    dest: /usr/local/bin/firefox
+    state: link
+    force: true
+
+# ==================================================
+# Remove Firefox Snap (best effort, no failure)
+# ==================================================
+
 - name: Remove Firefox snap if present
   become: true
   shell: |
     snap list | grep -q firefox && snap remove firefox || true
 
-# --------------------------------------------------
-# Remove Ubuntu Firefox transitional package
-# --------------------------------------------------
-- name: Purge Ubuntu Firefox transitional package
-  become: true
-  apt:
-    name: firefox
-    state: absent
-    purge: true
+
 
 # --------------------------------------------------
-# Prevent Firefox snap from being reinstalled
+# Apply Firefox Enterprise Policies (Yaru Dark Matte)
 # --------------------------------------------------
-- name: Block Firefox snap package
+
+- name: Ensure Firefox distribution directory exists
+  become: true
+  file:
+    path: /opt/firefox/distribution
+    state: directory
+    mode: '0755'
+
+- name: Deploy Firefox policies.json
   become: true
   copy:
-    dest: /etc/apt/preferences.d/no-firefox-snap
-    content: |
-      Package: firefox
-      Pin: release o=Ubuntu*
-      Pin-Priority: -1
+    src: policies.json
+    dest: /opt/firefox/distribution/policies.json
+    owner: root
+    group: root
     mode: '0644'
 
-# --------------------------------------------------
-# Add Mozilla Team PPA
-# --------------------------------------------------
-- name: Add Mozilla Team PPA
-  become: true
-  apt_repository:
-    repo: ppa:mozillateam/ppa
-    state: present
-    update_cache: true
-
-# --------------------------------------------------
-# Prefer Mozilla Team PPA packages
-# --------------------------------------------------
-- name: Pin Mozilla Team PPA as preferred source
-  become: true
-  copy:
-    dest: /etc/apt/preferences.d/mozilla-firefox
-    content: |
-      Package: *
-      Pin: release o=LP-PPA-mozillateam
-      Pin-Priority: 1001
-    mode: '0644'
-
-# --------------------------------------------------
-# Install Firefox (ESR build from Mozilla Team PPA)
-# --------------------------------------------------
-- name: Install Firefox (ESR from Mozilla Team PPA)
-  become: true
-  apt:
-    name: firefox
-    state: present
-    update_cache: true
