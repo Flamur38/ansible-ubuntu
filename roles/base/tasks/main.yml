@@ -2,9 +2,11 @@
   apt:
     update_cache: yes
 
-- name: Upgrade system
+- name: Upgrade system (allow downgrades for pinned packages)
+  become: true
   apt:
     upgrade: dist
+    allow_downgrade: true
 
 - name: Install essential packages
   apt:
