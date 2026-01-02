@@ -1,18 +1,14 @@
-🛠️ Ansible Ubuntu Workstation Setup
+### 🛠️ Ansible Ubuntu Workstation Setup
 
 This repository contains a production-grade Ansible project to fully provision and configure an Ubuntu workstation for security engineering, blue teaming, pentesting, and daily development.
 
 Designed to be:
-
 ✅ Idempotent
-
 ✅ ansible-lint clean (production profile)
-
 ✅ Snap-free where possible
-
 ✅ VM & laptop friendly
-
 ✅ Security-focused
+
 ```
 📁 Project Structure
 ansible-ubuntu/
