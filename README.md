@@ -39,6 +39,7 @@ ansible-ubuntu/
 Each role is self-contained, lint-clean, and can be executed independently.
 
 🚀 How to Run
+
 1️⃣ Prerequisites
 - Ubuntu 22.04 / 24.04
 - Python 3
@@ -49,39 +50,33 @@ sudo apt update
 sudo apt install -y ansible ansible-lint git
 ```
 2️⃣ Run full setup
+```
 ansible-playbook -i inventory/local playbooks/site.yml --ask-become-pass
+```
 
 3️⃣ Dry run (recommended)
+```
 ansible-playbook -i inventory/local playbooks/site.yml --check
+```
 
 🧩 Roles Overview
+
 🧱 base
-
-System updates
-
-Timezone & locale
-
-Core OS defaults
-
-Canonical modules only
-
-Lint-clean production profile
+- System updates
+- Timezone & locale
+- Core OS defaults
+- Canonical modules only
+- Lint-clean production profile
 
 🌐 browser
 
-Firefox ESR (official Mozilla tarball)
-
-Snap Firefox fully removed
-
-Enterprise policies enabled
-
-Forced extensions:
-
-uBlock Origin
-
-FoxyProxy
-
-Multi-Account Containers
+- Firefox ESR (official Mozilla tarball)
+- Snap Firefox fully removed
+- Enterprise policies enabled
+- Forced extensions:
+  - uBlock Origin
+  - FoxyProxy
+  - Multi-Account Containers
 
 Policy-driven configuration (no user interaction)
 
