@@ -1,0 +1,82 @@
+# --------------------------------------------------
+# Deploy shell dotfiles
+# --------------------------------------------------
+- name: Deploy .bashrc
+  become: true
+  copy:
+    src: bashrc
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.bashrc"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+- name: Deploy .bash_aliases
+  become: true
+  copy:
+    src: bash_aliases
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.bash_aliases"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+- name: Deploy .profile
+  become: true
+  copy:
+    src: profile
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.profile"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+- name: Deploy .bash_profile
+  become: true
+  copy:
+    src: bash_profile
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.bash_profile"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+# --------------------------------------------------
+# X / i3 related dotfiles
+# --------------------------------------------------
+- name: Deploy .xprofile
+  become: true
+  copy:
+    src: xprofile
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.xprofile"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+- name: Deploy .xinitrc
+  become: true
+  copy:
+    src: xinitrc
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.xinitrc"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+- name: Deploy .Xresources
+  become: true
+  copy:
+    src: Xresources
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.Xresources"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+
+# --------------------------------------------------
+# Optional: Zsh
+# --------------------------------------------------
+- name: Deploy .zshrc
+  become: true
+  copy:
+    src: zshrc
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.zshrc"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0644'
+  when: ansible_facts['user_shell'] is search('zsh')
+
