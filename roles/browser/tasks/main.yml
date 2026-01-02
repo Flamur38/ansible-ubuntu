@@ -57,11 +57,9 @@
   shell: |
     snap list | grep -q firefox && snap remove firefox || true
 
-
-
-# --------------------------------------------------
-# Apply Firefox Enterprise Policies (Yaru Dark Matte)
-# --------------------------------------------------
+# ==================================================
+# Apply Firefox Enterprise Policies
+# ==================================================
 
 - name: Ensure Firefox distribution directory exists
   become: true
@@ -75,6 +73,20 @@
   copy:
     src: policies.json
     dest: /opt/firefox/distribution/policies.json
+    owner: root
+    group: root
+    mode: '0644'
+
+
+# --------------------------------------------------
+# FoxyProxy managed configuration (Burp auto-profile)
+# --------------------------------------------------
+
+- name: Deploy FoxyProxy managed config
+  become: true
+  copy:
+    src: foxyproxy.json
+    dest: /opt/firefox/foxyproxy.json
     owner: root
     group: root
     mode: '0644'

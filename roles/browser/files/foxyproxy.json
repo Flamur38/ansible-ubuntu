@@ -1,0 +1,23 @@
+{
+  "mode": "manual",
+  "proxySettings": [
+    {
+      "id": "burp",
+      "name": "Burp Suite",
+      "type": "http",
+      "host": "127.0.0.1",
+      "port": 8080,
+      "username": "",
+      "password": "",
+      "active": true,
+      "color": "#ff6f00",
+      "notes": "Burp proxy (auto-managed)"
+    }
+  ],
+  "defaultProxyId": "burp",
+  "bypassList": [
+    "localhost",
+    "127.0.0.1"
+  ]
+}
+
