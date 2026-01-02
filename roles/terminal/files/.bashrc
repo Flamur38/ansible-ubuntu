@@ -58,12 +58,38 @@ fi
 
 if [ "$color_prompt" = yes ]; then
   # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-PS1="\[\e[0;36m\][\$(date +\"%d-%b-%y %T %Z\")] \[\e[0;38;5;26m\]\w\n\[\e[1;38;5;210m\]>>> \[\e[00m\]"
+# PS1="\[\e[0;36m\][\$(date +\"%d-%b-%y %T %Z\")] \[\e[0;38;5;26m\]\w\n\[\e[1;38;5;210m\]>>> $ \[\e[00m\]"
 
 
-# PS1="\[\e[0;36m\][\$(date +\"%d-%b-%y %T %Z\")] \[\e[0;38;5;26m\]\w\
-# \[\e[1;38;5;210m\]
-# >>> \[\e[00m\]"
+# -------------------------------
+# Git branch with color
+# -------------------------------
+git_ps1() {
+  local branch
+  branch=$(git branch --show-current 2>/dev/null) || return
+
+  if git diff --quiet 2>/dev/null; then
+    # clean repo → green
+    printf "\033[38;5;82m[%s]\033[0m" "$branch"
+  else
+    # dirty repo → red
+    printf "\033[38;5;196m[%s]\033[0m" "$branch"
+  fi
+}
+
+# -------------------------------
+# Prompt
+# -------------------------------
+PS1="\[\e[38;5;110m\][\$(date +\"%d-%b-%y %T %Z\")] \
+\[\e[38;5;74m\]\w \$(git_ps1)\n\
+\[\e[38;5;208m\]>>> \[\e[0m\]"
+
+
+# PS1="\[\e[38;5;109m\][\$(date +\"%d-%b-%y %T %Z\")] \
+# \[\e[38;5;245m\]\w \$(git_ps1)\n\
+# \[\e[38;5;81m\]>>> \[\e[0m\]"
+
+
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
