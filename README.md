@@ -3,11 +3,11 @@
 This repository contains a production-grade Ansible project to fully provision and configure an Ubuntu workstation for security engineering, blue teaming, pentesting, and daily development.
 
 Designed to be:
-✅ Idempotent
-✅ ansible-lint clean (production profile)
-✅ Snap-free where possible
-✅ VM & laptop friendly
-✅ Security-focused
+[x] Idempotent
+[x] ansible-lint clean (production profile)
+[x] Snap-free where possible
+[x] VM & laptop friendly
+[x] Security-focused
 
 ```
 📁 Project Structure
