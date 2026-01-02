@@ -8,7 +8,7 @@
     - terminal
     - tmux
     - nvim
-    # - browser
+    - browser
     - security-tools
     - i3
     - dotfiles

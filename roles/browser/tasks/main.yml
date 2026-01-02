@@ -1,19 +1,53 @@
 # --------------------------------------------------
-# Firefox ESR: apply Ubuntu Yaru Dark Matte theme
+# Remove Ubuntu Snap Firefox
 # --------------------------------------------------
-
-- name: Ensure Firefox ESR policies directory exists
+- name: Remove Firefox snap if present
   become: true
-  file:
-    path: /etc/firefox-esr/policies
-    state: directory
-    mode: '0755'
+  shell: |
+    snap list | grep -q firefox && snap remove firefox || true
 
-- name: Deploy Firefox ESR policies.json (Yaru Dark Matte theme)
+# --------------------------------------------------
+# Prevent Firefox snap from being reinstalled
+# --------------------------------------------------
+- name: Block Firefox snap package
   become: true
   copy:
-    src: policies.json
-    dest: /etc/firefox-esr/policies/policies.json
-    owner: root
-    group: root
+    dest: /etc/apt/preferences.d/no-firefox-snap
+    content: |
+      Package: firefox
+      Pin: release o=Ubuntu*
+      Pin-Priority: -1
     mode: '0644'
+
+# --------------------------------------------------
+# Add Mozilla Team PPA (ESR on Ubuntu 24.04)
+# --------------------------------------------------
+- name: Add Mozilla Team PPA
+  become: true
+  apt_repository:
+    repo: ppa:mozillateam/ppa
+    state: present
+    update_cache: true
+
+# --------------------------------------------------
+# Prefer Mozilla Team PPA packages
+# --------------------------------------------------
+- name: Pin Mozilla Team PPA as preferred source
+  become: true
+  copy:
+    dest: /etc/apt/preferences.d/mozilla-firefox
+    content: |
+      Package: *
+      Pin: release o=LP-PPA-mozillateam
+      Pin-Priority: 1001
+    mode: '0644'
+
+# --------------------------------------------------
+# Install Firefox (ESR build from Mozilla Team PPA)
+# --------------------------------------------------
+- name: Install Firefox (ESR from Mozilla Team PPA)
+  become: true
+  apt:
+    name: firefox
+    state: present
+    update_cache: true
