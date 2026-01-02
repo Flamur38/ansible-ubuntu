@@ -3,7 +3,7 @@
 # --------------------------------------------------
 - name: Install core security utilities
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - tcpdump
       - nmap
@@ -17,7 +17,7 @@
 
 - name: Zeek not available on Ubuntu 24.04
   debug:
-    msg: "Skipping Zeek install: no apt packages available for Ubuntu 24.04 yet."
+    msg: "Skipping Zeek install: no ansible.builtin.apt packages available for Ubuntu 24.04 yet."
 
 
 # --------------------------------------------------
@@ -25,7 +25,7 @@
 # --------------------------------------------------
 - name: Install blue-team tools 
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - suricata
       - auditd
@@ -37,7 +37,7 @@
 # --------------------------------------------------
 - name: Install pentesting tools
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - hydra
       - gobuster
@@ -52,7 +52,7 @@
 # --------------------------------------------------
 - name: Install malware analysis tools
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - yara
       - exiftool

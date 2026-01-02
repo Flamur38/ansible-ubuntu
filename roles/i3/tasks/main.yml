@@ -3,7 +3,7 @@
 # --------------------------------------------------
 - name: Install i3 and related packages
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - i3
       - i3status

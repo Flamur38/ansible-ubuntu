@@ -1,5 +1,5 @@
 - name: "Upgrade all packages"
-  apt: upgrade=yes force_apt_get=yes
+  ansible.builtin.apt: upgrade=yes force_apt_get=yes
   become: true
   become_method: sudo
 

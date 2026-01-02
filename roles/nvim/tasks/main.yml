@@ -1,6 +1,6 @@
 - name: Install Neovim dependencies
   become: true
-  apt:
+  ansible.builtin.apt:
     name:
       - ripgrep
       - fd-find
@@ -29,14 +29,14 @@
 
 - name: Add Neovim PPA
   become: true
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:neovim-ppa/unstable
     state: present
 
 
 - name: Install Neovim
   become: true
-  apt:
+  ansible.builtin.apt:
     name: neovim
     state: present
 

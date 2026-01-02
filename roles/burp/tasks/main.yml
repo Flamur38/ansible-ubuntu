@@ -3,7 +3,7 @@
 # --------------------------------------------------
 - name: Install NSS tools
   become: true
-  apt:
+  ansible.builtin.apt:
     name: libnss3-tools
     state: present
 

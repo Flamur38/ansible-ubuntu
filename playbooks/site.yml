@@ -9,6 +9,6 @@
     - tmux
     - nvim
     - browser
-    - security-tools
+    - security_tools
     - i3
     - dotfiles
