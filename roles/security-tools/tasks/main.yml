@@ -1,0 +1,61 @@
+# --------------------------------------------------
+# Core networking & utility tools
+# --------------------------------------------------
+- name: Install core security utilities
+  become: true
+  apt:
+    name:
+      - tcpdump
+      - nmap
+      - netcat-openbsd
+      - socat
+      - jq
+      - whois
+      - dnsutils
+    state: present
+
+
+- name: Zeek not available on Ubuntu 24.04
+  debug:
+    msg: "Skipping Zeek install: no apt packages available for Ubuntu 24.04 yet."
+
+
+# --------------------------------------------------
+# Install other blue-team tools
+# --------------------------------------------------
+- name: Install blue-team tools 
+  become: true
+  apt:
+    name:
+      - suricata
+      - auditd
+      - fail2ban
+    state: present
+
+# --------------------------------------------------
+# Pentesting basics
+# --------------------------------------------------
+- name: Install pentesting tools
+  become: true
+  apt:
+    name:
+      - hydra
+      - gobuster
+      - nikto
+      - sqlmap
+      - wfuzz
+    state: present
+
+# --------------------------------------------------
+# Malware & file analysis tools
+# --------------------------------------------------
+- name: Install malware analysis tools
+  become: true
+  apt:
+    name:
+      - yara
+      - exiftool
+      - binwalk
+      - binutils
+    state: present
+
