@@ -1,5 +1,5 @@
 # --------------------------------------------------
-# Remove Snap Firefox (if installed)
+# Remove Snap Firefox (if present)
 # --------------------------------------------------
 - name: Remove Snap Firefox
   become: true
@@ -7,16 +7,27 @@
   ignore_errors: true
 
 # --------------------------------------------------
-# Disable Snap Firefox reinstallation
+# Add Mozilla Team PPA (provides firefox-esr .deb)
 # --------------------------------------------------
-- name: Block Snap Firefox package
+- name: Add Mozilla Team PPA
+  become: true
+  apt_repository:
+    repo: ppa:mozillateam/ppa
+    state: present
+    update_cache: true
+
+# --------------------------------------------------
+# Pin Mozilla Team PPA to prevent Snap reinstallation
+# --------------------------------------------------
+- name: Pin Mozilla Team PPA as preferred source
   become: true
   copy:
-    dest: /etc/apt/preferences.d/firefox-nosnap
+    dest: /etc/apt/preferences.d/mozillateam-ppa
+    mode: '0644'
     content: |
       Package: firefox*
-      Pin: release o=Ubuntu*
-      Pin-Priority: -1
+      Pin: release o=LP-PPA-mozillateam
+      Pin-Priority: 1001
 
 # --------------------------------------------------
 # Install Firefox ESR (deb)
@@ -26,3 +37,23 @@
   apt:
     name: firefox-esr
     state: present
+    update_cache: true
+
+# --------------------------------------------------
+# Remove Ubuntu firefox snap wrapper
+# --------------------------------------------------
+- name: Remove Ubuntu firefox snap wrapper
+  become: true
+  file:
+    path: /usr/bin/firefox
+    state: absent
+
+# --------------------------------------------------
+# Symlink firefox -> firefox-esr
+# --------------------------------------------------
+- name: Symlink firefox to firefox-esr
+  become: true
+  file:
+    src: /usr/bin/firefox-esr
+    dest: /usr/bin/firefox
+    state: link
