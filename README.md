@@ -2,7 +2,7 @@
 
 This repository contains a production-grade Ansible project to fully provision and configure an Ubuntu workstation for security engineering, blue teaming, pentesting, and daily development.
 
-It is designed to be:
+Designed to be:
 
 ✅ Idempotent
 
@@ -13,7 +13,7 @@ It is designed to be:
 ✅ VM & laptop friendly
 
 ✅ Security-focused
-
+```
 📁 Project Structure
 ansible-ubuntu/
 ├── ansible.cfg
@@ -34,18 +34,18 @@ ansible-ubuntu/
 │   ├── terminal/
 │   └── tmux/
 └── README.md
+```
 
-
-Each role is self-contained, lint-clean, and can be run independently.
+Each role is self-contained, lint-clean, and can be executed independently.
 
 🚀 How to Run
 1️⃣ Prerequisites
 
-Ubuntu 22.04+ / 24.04
+Ubuntu 22.04 / 24.04
 
 Python 3
 
-Ansible installed
+Ansible
 
 sudo apt update
 sudo apt install -y ansible ansible-lint git
@@ -67,11 +67,13 @@ Core OS defaults
 
 Canonical modules only
 
+Lint-clean production profile
+
 🌐 browser
 
 Firefox ESR (official Mozilla tarball)
 
-Snap Firefox removed
+Snap Firefox fully removed
 
 Enterprise policies enabled
 
@@ -81,9 +83,9 @@ uBlock Origin
 
 FoxyProxy
 
-Containers
+Multi-Account Containers
 
-Policy-driven configuration (no user clicks)
+Policy-driven configuration (no user interaction)
 
 🔐 burp
 
@@ -95,9 +97,11 @@ Detects Firefox profile
 
 ESR-compatible
 
+Safe idempotent cert handling
+
 🧠 nvim
 
-Neovim with Lua config
+Neovim with Lua configuration
 
 Lazy.nvim plugin manager
 
@@ -117,31 +121,35 @@ Custom configs deployed to ~/.config
 
 ⌨️ terminal
 
-GNOME Terminal (default profile)
+GNOME Terminal (default profile only)
 
-Ubuntu/Yaru color palette
+Ubuntu / Yaru-style colors
 
-Custom font
+Custom font size
 
 Disabled bell & menubar
 
-No custom profile hacks
+No fragile profile hacks
 
 🧵 tmux
 
-Ubuntu-style tmux bar
+Ubuntu-style tmux status bar
 
-Clean status line
+Clean, readable layout
 
-No plugins required
+No plugin dependency
+
+Works in VM & bare metal
 
 🧾 dotfiles
 
 Bash / Zsh / X / i3 compatible
 
-Dotfiles stored without dots (Ansible best practice)
+Dotfiles stored without leading dots (Ansible best practice)
 
-Clean copy & ownership handling
+Correct ownership & permissions
+
+Safe to re-run
 
 🖼️ pictures
 
@@ -149,9 +157,11 @@ Wallpapers & assets
 
 Copied to ~/Pictures
 
+Desktop-ready out of the box
+
 🧪 security-tools
 
-Blue team:
+Blue team
 
 Suricata
 
@@ -159,7 +169,7 @@ Fail2ban
 
 Auditd
 
-Pentest:
+Pentesting
 
 Burp
 
@@ -171,7 +181,7 @@ Nikto
 
 SQLMap
 
-Malware / analysis:
+Malware / analysis
 
 YARA
 
@@ -210,7 +220,7 @@ Burp CA imported safely
 
 No secrets stored in repo
 
-User-level configs separated from root configs
+Clear separation of user vs root config
 
 🧠 Design Philosophy
 
