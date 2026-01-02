@@ -1,0 +1,58 @@
+- name: Install Neovim dependencies
+  become: true
+  apt:
+    name:
+      - ripgrep
+      - fd-find
+      - gcc
+      - g++
+      - make
+      - unzip
+      - curl
+      - git
+      - python3-pip
+      - nodejs
+      - npm
+    state: present
+
+
+- name: Add Neovim PPA
+  become: true
+  apt_repository:
+    repo: ppa:neovim-ppa/unstable
+    state: present
+
+
+- name: Install Neovim
+  become: true
+  apt:
+    name: neovim
+    state: present
+
+
+- name: Ensure nvim config directory exists
+  become: true
+  file:
+    path: "/home/{{ ansible_env.SUDO_USER }}/.config"
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+
+- name: Deploy Neovim configuration
+  become: false
+  copy:
+    src: nvim
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.config/"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+
+- name: Run Neovim once to install plugins
+  become: false
+  command: nvim --headless "+Lazy! sync" +qa
+  args:
+    creates: "/home/{{ ansible_env.SUDO_USER }}/.local/share/nvim/lazy"
+
