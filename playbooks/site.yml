@@ -8,4 +8,5 @@
     - terminal
     - tmux
     - nvim
-    - browser
+    # - browser
+    - security-tools

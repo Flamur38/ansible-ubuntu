@@ -39,3 +39,4 @@
     -d sql:{{ firefox_profiles.files[0].path }}
   args:
     creates: "{{ firefox_profiles.files[0].path }}/cert9.db"
+
