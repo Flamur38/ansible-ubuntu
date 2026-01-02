@@ -5,9 +5,9 @@ This repository contains a production-grade Ansible project to fully provision a
 Designed to be:
 - [x] Idempotent
 - [x] ansible-lint clean (production profile)
-[x] Snap-free where possible
-[x] VM & laptop friendly
-[x] Security-focused
+- [x] Snap-free where possible
+- [x] VM & laptop friendly
+- [x] Security-focused
 
 ```
 📁 Project Structure
