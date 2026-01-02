@@ -1,0 +1,28 @@
+# --------------------------------------------------
+# Remove Snap Firefox (if installed)
+# --------------------------------------------------
+- name: Remove Snap Firefox
+  become: true
+  command: snap remove firefox
+  ignore_errors: true
+
+# --------------------------------------------------
+# Disable Snap Firefox reinstallation
+# --------------------------------------------------
+- name: Block Snap Firefox package
+  become: true
+  copy:
+    dest: /etc/apt/preferences.d/firefox-nosnap
+    content: |
+      Package: firefox*
+      Pin: release o=Ubuntu*
+      Pin-Priority: -1
+
+# --------------------------------------------------
+# Install Firefox ESR (deb)
+# --------------------------------------------------
+- name: Install Firefox ESR
+  become: true
+  apt:
+    name: firefox-esr
+    state: present
