@@ -40,16 +40,14 @@ Each role is self-contained, lint-clean, and can be executed independently.
 
 🚀 How to Run
 1️⃣ Prerequisites
-
-Ubuntu 22.04 / 24.04
-
-Python 3
-
-Ansible
-
+- Ubuntu 22.04 / 24.04
+- Python 3
+- Ansible
+    
+```
 sudo apt update
 sudo apt install -y ansible ansible-lint git
-
+```
 2️⃣ Run full setup
 ansible-playbook -i inventory/local playbooks/site.yml --ask-become-pass
 
