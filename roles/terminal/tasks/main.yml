@@ -18,3 +18,71 @@
     src: .bash_profile
     dest: "/home/{{ ansible_env.SUDO_USER }}/.bash_profile"
     mode: '0644'
+
+
+
+# --------------------------------------------------
+# Get default GNOME Terminal profile UUID
+# --------------------------------------------------
+- name: Get default GNOME Terminal profile
+  become: false
+  command: >
+    gsettings get org.gnome.Terminal.ProfilesList default
+  register: gnome_terminal_profile
+  changed_when: false
+
+# --------------------------------------------------
+# Clean profile UUID (remove quotes)
+# --------------------------------------------------
+- name: Set GNOME Terminal profile UUID fact
+  set_fact:
+    terminal_profile: "{{ gnome_terminal_profile.stdout | trim | regex_replace(\"'\", \"\") }}"
+
+# --------------------------------------------------
+# Disable system theme colors
+# --------------------------------------------------
+- name: Disable system theme colors
+  become: false
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile }}/
+    use-theme-colors false
+
+# --------------------------------------------------
+# Set foreground and background colors
+# --------------------------------------------------
+- name: Set terminal foreground color
+  become: false
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile }}/
+    foreground-color '#D3D7CF'
+
+- name: Set terminal background color
+  become: false
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile }}/
+    background-color '#1E1E1E'
+
+# --------------------------------------------------
+# Set cursor color
+# --------------------------------------------------
+- name: Set terminal cursor color
+  become: false
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile }}/
+    cursor-background-color '#E95420'
+
+# --------------------------------------------------
+# Set Ubuntu/Yaru-inspired color palette
+# --------------------------------------------------
+- name: Set terminal color palette
+  become: false
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile }}/
+    palette "['#2E3436', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8', '#34E2E2', '#EEEEEC',
+              '#555753', '#CC0000', '#73D216', '#EDD400', '#3465A4', '#75507B', '#06989A', '#D3D7CF']"
+
