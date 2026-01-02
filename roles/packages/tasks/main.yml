@@ -1,12 +1,33 @@
+- name: "Upgrade all packages"
+  apt: upgrade=yes force_apt_get=yes
+  become: true
+  become_method: sudo
+
 - name: Install common user packages
-  apt:
+  package:
     name:
       - htop
       - neofetch
       - ripgrep
       - fd-find
       - jq
+      - pipx
+      - rsyslog
+      - gh
+      - ntpdate
       - flameshot
       - terminator
+    state: latest
+  become: true
+  become_method: sudo
+
+
+
+- name: "Add Docker keyring to apt"
+  apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
     state: present
+  become: true
+  become_method: sudo
+
 
