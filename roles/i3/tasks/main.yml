@@ -1,0 +1,94 @@
+# --------------------------------------------------
+# Install i3 window manager and tools
+# --------------------------------------------------
+- name: Install i3 and related packages
+  become: true
+  apt:
+    name:
+      - i3
+      - i3status
+      - rofi
+      - xbacklight
+      - pavucontrol
+      - pulseaudio-utils
+    state: present
+
+# --------------------------------------------------
+# Ensure ~/.config exists
+# --------------------------------------------------
+- name: Ensure user config directory exists
+  become: true
+  file:
+    path: "/home/{{ ansible_env.SUDO_USER }}/.config"
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+# --------------------------------------------------
+# Deploy i3 config
+# --------------------------------------------------
+- name: Deploy i3 config
+  become: true
+  copy:
+    src: i3
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.config/"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+# --------------------------------------------------
+# Deploy i3status config
+# --------------------------------------------------
+- name: Deploy i3status config
+  become: true
+  copy:
+    src: i3status
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.config/"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+# --------------------------------------------------
+# Deploy rofi config
+# --------------------------------------------------
+- name: Deploy rofi config
+  become: true
+  copy:
+    src: rofi
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.config/"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0755'
+
+# --------------------------------------------------
+# Ensure ~/.vpn directory exists (for OpenVPN configs)
+# --------------------------------------------------
+- name: Ensure ~/.vpn directory exists
+  become: true
+  file:
+    path: "/home/{{ ansible_env.SUDO_USER }}/.vpn"
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: '0775'
+
+# --------------------------------------------------
+# Install i3status VPN helper script
+# --------------------------------------------------
+- name: Ensure /etc/htb directory exists
+  become: true
+  file:
+    path: /etc/htb
+    state: directory
+    mode: '0755'
+
+- name: Deploy i3status VPN script
+  become: true
+  copy:
+    src: htb/i3status-server.sh
+    dest: /etc/htb/i3status-server.sh
+    owner: root
+    group: root
+    mode: '0755'
+
