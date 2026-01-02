@@ -13,8 +13,8 @@
 # --------------------------------------------------
 - name: Add flamy_soc profile to profile list
   become: false
-  command: >
-    gsettings set org.gnome.Terminal.ProfilesList list
+  shell: |
+    gsettings set org.gnome.Terminal.ProfilesList list \
     "$(gsettings get org.gnome.Terminal.ProfilesList list | sed "s/]$/, '{{ flamy_soc_uuid.stdout }}']/")"
 
 # --------------------------------------------------
