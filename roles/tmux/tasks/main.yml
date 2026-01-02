@@ -4,7 +4,7 @@
     state: present
 
 - name: Install TPM (Tmux Plugin Manager)
-  become: true
+  become: false
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
