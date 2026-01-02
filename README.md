@@ -106,39 +106,40 @@ ansible-playbook -i inventory/local playbooks/site.yml --check
 - No fragile profile hacks
 
 🧵 tmux
-Ubuntu-style tmux status bar
-Clean, readable layout
-No plugin dependency
-Works in VM & bare metal
+- Ubuntu-style tmux status bar
+- Clean, readable layout
+- No plugin dependency
+- Works in VM & bare metal
 
 🧾 dotfiles
-Bash / Zsh / X / i3 compatible
-Dotfiles stored without leading dots (Ansible best practice)
-Correct ownership & permissions
-Safe to re-run
+- Bash / Zsh / X / i3 compatible
+- Dotfiles stored without leading dots (Ansible best practice)
+- Correct ownership & permissions
+- Safe to re-run
 
 🖼️ pictures
-Wallpapers & assets
-Copied to ~/Pictures
-Desktop-ready out of the box
+- Wallpapers & assets
+- Copied to ~/Pictures
+- Desktop-ready out of the box
 
 🧪 security-tools
+
 Blue team
-Suricata
-Fail2ban
-Auditd
+- Suricata
+- Fail2ban
+- Auditd
 
 Pentesting
-Burp
-Hydra
-Gobuster
-Nikto
-SQLMap
+- Burp
+- Hydra
+- Gobuster
+- Nikto
+- SQLMap
 
 Malware / analysis
-YARA
-Binwalk
-ExifTool
+- YARA
+- Binwalk
+- ExifTool
 
 🧼 Code Quality
 This repository is fully lint-clean:
@@ -148,31 +149,25 @@ ansible-lint
 # ✔ Profile: production
 ```
 
-Practices used:
-FQCN everywhere
-No free-form modules
-No risky shell usage
-Schema-correct YAML
-Idempotent tasks
 
 🔒 Security Notes
-Firefox is snap-proof
-Enterprise policies enforce extensions
-Burp CA imported safely
-No secrets stored in repo
-Clear separation of user vs root config
+- Firefox is snap-proof
+- Enterprise policies enforce extensions
+- Burp CA imported safely
+- No secrets stored in repo
+- Clear separation of user vs root config
 
 🧠 Design Philosophy
-This project favors:
-Explicit over magic
-Policies over clicks
-Reproducibility over convenience
-Linting over “works on my machine”
+- This project favors:
+- Explicit over magic
+- Policies over clicks
+- Reproducibility over convenience
+- Linting over “works on my machine”
 
 📌 Tested On
-Ubuntu 24.04 (VM & bare metal)
-GNOME + i3
-Firefox ESR (Mozilla tarball)
+- Ubuntu 24.04 (VM & bare metal)
+- GNOME + i3
+- Firefox ESR (Mozilla tarball)
 
 📜 License
-MIT — use, fork, adapt.
+- MIT — use, fork, adapt.
