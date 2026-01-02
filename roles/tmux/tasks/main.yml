@@ -1,19 +1,35 @@
+---
+# ==================================================
+# tmux setup
+# ==================================================
+
 - name: Install tmux
+  become: true
   ansible.builtin.apt:
     name: tmux
     state: present
+    update_cache: true
+
+- name: Ensure tmux config directory exists
+  ansible.builtin.file:
+    path: "/home/{{ ansible_env.SUDO_USER }}/.tmux"
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
+
+- name: Deploy tmux.conf
+  ansible.builtin.copy:
+    src: tmux.conf
+    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux.conf"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0644"
 
 - name: Install TPM (Tmux Plugin Manager)
-  become: false
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux/plugins/tpm"
-    update: no
-
-- name: Deploy .tmux.conf
-  become: true
-  copy:
-    src: .tmux.conf
-    dest: "/home/{{ ansible_env.SUDO_USER }}/.tmux.conf"
-    mode: '0644'
-
+    version: master
+    update: false
+  become: false

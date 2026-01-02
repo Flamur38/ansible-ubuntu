@@ -1,23 +1,24 @@
+---
 # ==================================================
 # Firefox ESR (official Mozilla tarball, snap-proof)
 # ==================================================
 
 - name: Ensure /opt exists
   become: true
-  file:
+  ansible.builtin.file:
     path: /opt
     state: directory
     mode: '0755'
 
 - name: Remove any previous Firefox install in /opt
   become: true
-  file:
+  ansible.builtin.file:
     path: /opt/firefox
     state: absent
 
 - name: Download Firefox ESR tarball (official Mozilla)
   become: true
-  get_url:
+  ansible.builtin.get_url:
     url: "https://download.mozilla.org/?product=firefox-esr-latest&os=linux64&lang=en-US"
     dest: /tmp/firefox-esr.tar.bz2
     mode: '0644'
@@ -25,7 +26,7 @@
 
 - name: Extract Firefox ESR into /opt
   become: true
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/firefox-esr.tar.bz2
     dest: /opt
     remote_src: true
@@ -34,7 +35,7 @@
 
 - name: Create firefox-esr symlink
   become: true
-  file:
+  ansible.builtin.file:
     src: /opt/firefox/firefox
     dest: /usr/local/bin/firefox-esr
     state: link
@@ -42,52 +43,58 @@
 
 - name: Make firefox command use ESR
   become: true
-  file:
+  ansible.builtin.file:
     src: /usr/local/bin/firefox-esr
     dest: /usr/local/bin/firefox
     state: link
     force: true
 
 # ==================================================
-# Remove Firefox Snap (best effort, no failure)
+# Remove Firefox Snap (best effort)
 # ==================================================
+
+- name: Check if Firefox snap is installed
+  become: true
+  ansible.builtin.command: snap list
+  register: snap_list
+  changed_when: false
+  failed_when: false
 
 - name: Remove Firefox snap if present
   become: true
-  shell: |
-    snap list | grep -q firefox && snap remove firefox || true
+  ansible.builtin.command: snap remove firefox
+  when: "'firefox' in snap_list.stdout"
+  changed_when: true
 
 # ==================================================
-# Apply Firefox Enterprise Policies
+# Firefox Enterprise Policies
 # ==================================================
 
 - name: Ensure Firefox distribution directory exists
   become: true
-  file:
+  ansible.builtin.file:
     path: /opt/firefox/distribution
     state: directory
     mode: '0755'
 
 - name: Deploy Firefox policies.json
   become: true
-  copy:
+  ansible.builtin.copy:
     src: policies.json
     dest: /opt/firefox/distribution/policies.json
     owner: root
     group: root
     mode: '0644'
 
+# ==================================================
+# FoxyProxy managed configuration
+# ==================================================
 
-# --------------------------------------------------
-# FoxyProxy managed configuration (Burp auto-profile)
-# --------------------------------------------------
-
-- name: Deploy FoxyProxy managed config
+- name: Deploy FoxyProxy managed configuration
   become: true
-  copy:
+  ansible.builtin.copy:
     src: foxyproxy.json
     dest: /opt/firefox/foxyproxy.json
     owner: root
     group: root
     mode: '0644'
-

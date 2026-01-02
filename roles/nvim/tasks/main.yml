@@ -1,7 +1,16 @@
+---
+# ==================================================
+# Neovim setup (Lazy.nvim based)
+# ==================================================
+
+# --------------------------------------------------
+# Install Neovim dependencies
+# --------------------------------------------------
 - name: Install Neovim dependencies
   become: true
   ansible.builtin.apt:
     name:
+      - neovim
       - ripgrep
       - fd-find
       - gcc
@@ -10,9 +19,6 @@
       - unzip
       - curl
       - git
-      - python3-pip
-      - nodejs
-      - npm
       - cmake
       - ninja-build
       - gettext
@@ -21,49 +27,40 @@
       - liblua5.1-0-dev
       - python3
       - python3-pip
+      - nodejs
+      - npm
       - cargo
-      - ripgrep
-      - fd-find
     state: present
+    update_cache: true
 
-
-- name: Add Neovim PPA
-  become: true
-  ansible.builtin.apt_repository:
-    repo: ppa:neovim-ppa/unstable
-    state: present
-
-
-- name: Install Neovim
-  become: true
-  ansible.builtin.apt:
-    name: neovim
-    state: present
-
-
-- name: Ensure nvim config directory exists
-  become: true
-  file:
+# --------------------------------------------------
+# Ensure ~/.config exists
+# --------------------------------------------------
+- name: Ensure user config directory exists
+  ansible.builtin.file:
     path: "/home/{{ ansible_env.SUDO_USER }}/.config"
     state: directory
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
-    mode: '0755'
+    mode: "0755"
 
-
+# --------------------------------------------------
+# Deploy Neovim configuration
+# --------------------------------------------------
 - name: Deploy Neovim configuration
-  become: false
-  copy:
+  ansible.builtin.copy:
     src: nvim
     dest: "/home/{{ ansible_env.SUDO_USER }}/.config/"
     owner: "{{ ansible_env.SUDO_USER }}"
     group: "{{ ansible_env.SUDO_USER }}"
-    mode: '0755'
+    mode: "0755"
 
-
-- name: Run Neovim once to install plugins
-  become: false
-  command: nvim --headless "+Lazy! sync" +qa
+# --------------------------------------------------
+# Bootstrap Lazy.nvim plugins (run once)
+# --------------------------------------------------
+- name: Install Neovim plugins (Lazy.nvim)
+  ansible.builtin.command:
+    cmd: nvim --headless "+Lazy! sync" +qa
   args:
     creates: "/home/{{ ansible_env.SUDO_USER }}/.local/share/nvim/lazy"
-
+  changed_when: false

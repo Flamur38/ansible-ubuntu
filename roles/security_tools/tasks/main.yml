@@ -1,5 +1,11 @@
+---
+# ==================================================
+# Security tools (Blue Team + Pentest essentials)
+# Ubuntu 24.04 compatible
+# ==================================================
+
 # --------------------------------------------------
-# Core networking & utility tools
+# Core networking & investigation utilities
 # --------------------------------------------------
 - name: Install core security utilities
   become: true
@@ -13,17 +19,19 @@
       - whois
       - dnsutils
     state: present
+    update_cache: true
 
-
+# --------------------------------------------------
+# Zeek (not available on Ubuntu 24.04)
+# --------------------------------------------------
 - name: Zeek not available on Ubuntu 24.04
-  debug:
-    msg: "Skipping Zeek install: no ansible.builtin.apt packages available for Ubuntu 24.04 yet."
-
+  ansible.builtin.debug:
+    msg: "Skipping Zeek install: no apt packages available for Ubuntu 24.04."
 
 # --------------------------------------------------
-# Install other blue-team tools
+# Blue-team defensive tools
 # --------------------------------------------------
-- name: Install blue-team tools 
+- name: Install blue-team tools
   become: true
   ansible.builtin.apt:
     name:
@@ -33,7 +41,7 @@
     state: present
 
 # --------------------------------------------------
-# Pentesting basics
+# Pentesting tools (CLI)
 # --------------------------------------------------
 - name: Install pentesting tools
   become: true
@@ -44,7 +52,6 @@
       - nikto
       - sqlmap
       - wfuzz
-      - burp
     state: present
 
 # --------------------------------------------------
@@ -59,4 +66,3 @@
       - binwalk
       - binutils
     state: present
-

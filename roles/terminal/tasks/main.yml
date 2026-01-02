@@ -1,94 +1,102 @@
-# --------------------------------------------------
+---
+# ==================================================
 # GNOME Terminal – configure DEFAULT profile only
-# --------------------------------------------------
+# ==================================================
 
+# --------------------------------------------------
 # Get default GNOME Terminal profile UUID
+# --------------------------------------------------
 - name: Get default GNOME Terminal profile UUID
-  become: false
-  command: gsettings get org.gnome.Terminal.ProfilesList default
+  ansible.builtin.command:
+    cmd: gsettings get org.gnome.Terminal.ProfilesList default
   register: terminal_default_profile
   changed_when: false
 
-- name: Set default profile UUID fact
-  set_fact:
+- name: Set terminal profile UUID fact
+  ansible.builtin.set_fact:
     terminal_profile_uuid: "{{ terminal_default_profile.stdout | trim | trim(\"'\") }}"
 
 # --------------------------------------------------
 # Global terminal settings
 # --------------------------------------------------
-
 - name: Disable terminal menubar
-  become: false
-  command: >
-    gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+  ansible.builtin.command:
+    cmd: gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
+  changed_when: false
 
 # --------------------------------------------------
-# Profile settings
+# Profile-specific settings
 # --------------------------------------------------
-
 - name: Disable terminal bell
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    audible-bell false
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      audible-bell false
+  changed_when: false
 
 - name: Enable custom font
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    use-system-font false
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      use-system-font false
+  changed_when: false
 
-- name: Set font to Monospace 17
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    font 'Monospace 17'
+- name: Set font to Monospace 15
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      font 'Monospace 15'
+  changed_when: false
 
 - name: Disable theme colors
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    use-theme-colors false
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      use-theme-colors false
+  changed_when: false
 
 - name: Set terminal foreground color
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    foreground-color '#D3D7CF'
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      foreground-color '#D3D7CF'
+  changed_when: false
 
 - name: Set terminal background color
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    background-color '#1E1E1E'
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      background-color '#1E1E1E'
+  changed_when: false
 
-# Cursor color needs this flag
 - name: Enable cursor colors
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    cursor-colors-set true
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      cursor-colors-set true
+  changed_when: false
 
 - name: Set cursor color (Ubuntu orange)
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    cursor-background-color '#E95420'
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      cursor-background-color '#E95420'
+  changed_when: false
 
 - name: Set Ubuntu/Yaru color palette
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-    palette "['#2E3436', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8',
-              '#34E2E2', '#EEEEEC', '#555753', '#CC0000', '#73D216', '#EDD400',
-              '#3465A4', '#75507B', '#06989A', '#D3D7CF']"
-
+  ansible.builtin.command:
+    cmd: >
+      gsettings set
+      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
+      palette "['#2E3436', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8',
+                '#34E2E2', '#EEEEEC', '#555753', '#CC0000', '#73D216', '#EDD400',
+                '#3465A4', '#75507B', '#06989A', '#D3D7CF']"
+  changed_when: false
