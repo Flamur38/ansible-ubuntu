@@ -1,146 +1,103 @@
 # --------------------------------------------------
-# GNOME Terminal: create/use profile named "flamy_soc"
+# GNOME Terminal – flamy_soc profile
 # --------------------------------------------------
 
-- name: Read GNOME Terminal profile list
-  become: false
-  command: gsettings get org.gnome.Terminal.ProfilesList list
-  register: gt_profiles_raw
-  changed_when: false
-
-- name: Parse GNOME Terminal profile UUIDs
-  set_fact:
-    gt_profiles: "{{ gt_profiles_raw.stdout | regex_replace(\"[\\[\\]' ]\", '') | split(',') | reject('equalto','') | list }}"
-
-- name: Read visible-name for each existing profile
-  become: false
-  command: >
-    gsettings get
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ item }}/
-    visible-name
-  loop: "{{ gt_profiles }}"
-  register: gt_names
-  changed_when: false
-  failed_when: false
-
-- name: Find existing profile UUID for flamy_soc (if any)
-  set_fact:
-    flamy_soc_uuid: >-
-      {{
-        (
-          gt_names.results
-          | selectattr('stdout', 'defined')
-          | selectattr('stdout', 'search', \"'flamy_soc'\")
-          | map(attribute='item')
-          | list
-        ) | first | default('')
-      }}
-
-- name: Generate UUID for new flamy_soc profile (only if missing)
+- name: Generate UUID for flamy_soc profile
   become: false
   command: uuidgen
-  register: new_uuid
+  register: flamy_soc_uuid
   changed_when: false
-  when: flamy_soc_uuid == ''
 
-- name: Set flamy_soc_uuid to generated UUID (only if missing)
-  set_fact:
-    flamy_soc_uuid: "{{ new_uuid.stdout }}"
-  when: flamy_soc_uuid == ''
-
-- name: Add flamy_soc UUID to profile list (only if it was missing)
+# --------------------------------------------------
+# Add profile to GNOME Terminal
+# --------------------------------------------------
+- name: Add flamy_soc profile to profile list
   become: false
   command: >
     gsettings set org.gnome.Terminal.ProfilesList list
-    "{{ (gt_profiles + [flamy_soc_uuid]) | unique | map('regex_replace', '^(.*)$', \"'\\1'\") | join(', ') | regex_replace('^(.*)$', '[\\1]') }}"
-  when: new_uuid is defined and new_uuid.stdout is defined
+    "$(gsettings get org.gnome.Terminal.ProfilesList list | sed "s/]$/, '{{ flamy_soc_uuid.stdout }}']/")"
 
+# --------------------------------------------------
+# Set flamy_soc as default profile
+# --------------------------------------------------
 - name: Set flamy_soc as default profile
   become: false
   command: >
-    gsettings set org.gnome.Terminal.ProfilesList default '{{ flamy_soc_uuid }}'
+    gsettings set org.gnome.Terminal.ProfilesList default '{{ flamy_soc_uuid.stdout }}'
 
-- name: Set flamy_soc visible name
+# --------------------------------------------------
+# Set visible profile name
+# --------------------------------------------------
+- name: Set flamy_soc profile name
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     visible-name 'flamy_soc'
 
 # --------------------------------------------------
-# Global GNOME Terminal settings
+# Global terminal settings
 # --------------------------------------------------
-
-- name: Disable terminal menubar (global)
+- name: Disable terminal menubar
   become: false
   command: >
     gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
 
 # --------------------------------------------------
-# Profile settings: bell, font, colors
+# Profile settings
 # --------------------------------------------------
-
-- name: Disable terminal bell (profile)
+- name: Disable terminal bell
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     audible-bell false
 
-- name: Use custom font (profile)
+- name: Enable custom font
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     use-system-font false
 
-- name: Set font to Monospace 15 (profile)
+- name: Set font to Monospace 15
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     font 'Monospace 15'
 
-- name: Disable theme colors (profile)
+- name: Disable theme colors
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     use-theme-colors false
 
-- name: Set foreground color (profile)
+- name: Set foreground color
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     foreground-color '#D3D7CF'
 
-- name: Set background color (profile)
+- name: Set background color
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     background-color '#1E1E1E'
 
-# Cursor color requires cursor-colors-set=true
-- name: Enable custom cursor colors (profile)
+- name: Enable cursor color
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     cursor-colors-set true
 
-- name: Set cursor background color (profile)
+- name: Set cursor color
   become: false
   command: >
     gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid.stdout }}/
     cursor-background-color '#E95420'
-
-- name: Set Ubuntu/Yaru-ish palette (profile)
-  become: false
-  command: >
-    gsettings set
-    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ flamy_soc_uuid }}/
-    palette "['#2E3436', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8', '#34E2E2', '#EEEEEC',
-              '#555753', '#CC0000', '#73D216', '#EDD400', '#3465A4', '#75507B', '#06989A', '#D3D7CF']"
