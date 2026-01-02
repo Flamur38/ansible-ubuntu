@@ -1,3 +1,4 @@
+---
 # --------------------------------------------------
 # Install NSS tools (for Firefox cert import)
 # --------------------------------------------------
@@ -12,7 +13,7 @@
 # --------------------------------------------------
 - name: Locate Firefox profiles directory
   become: false
-  find:
+  ansible.builtin.find:
     paths: "/home/{{ ansible_env.SUDO_USER }}/.mozilla/firefox"
     patterns: "*.default*"
     file_type: directory
@@ -22,7 +23,7 @@
 # Fail if no Firefox profile exists
 # --------------------------------------------------
 - name: Ensure Firefox profile exists
-  fail:
+  ansible.builtin.fail:
     msg: "No Firefox profile found. Start Firefox once before running this role."
   when: firefox_profiles.matched == 0
 
@@ -31,12 +32,11 @@
 # --------------------------------------------------
 - name: Import Burp CA into Firefox
   become: false
-  command: >
+  ansible.builtin.command: >
     certutil -A
     -n "Burp Suite CA"
-    -t "C,," 
+    -t "C,,"
     -i "{{ role_path }}/files/burp-ca.der"
     -d sql:{{ firefox_profiles.files[0].path }}
   args:
     creates: "{{ firefox_profiles.files[0].path }}/cert9.db"
-

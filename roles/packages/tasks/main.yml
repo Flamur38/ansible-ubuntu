@@ -1,10 +1,22 @@
-- name: "Upgrade all packages"
-  ansible.builtin.apt: upgrade=yes force_apt_get=yes
+---
+# --------------------------------------------------
+# System upgrade
+# --------------------------------------------------
+
+- name: Upgrade all packages
   become: true
-  become_method: sudo
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    cache_valid_time: 3600
+
+# --------------------------------------------------
+# Common user packages
+# --------------------------------------------------
 
 - name: Install common user packages
-  package:
+  become: true
+  ansible.builtin.apt:
     name:
       - htop
       - neofetch
@@ -17,16 +29,22 @@
       - ntpdate
       - flameshot
       - terminator
-    state: latest
-  become: true
-  become_method: sudo
-
-
-
-- name: "Add Docker keyring to apt"
-  apt_key:
-    url: "https://download.docker.com/linux/debian/gpg"
     state: present
-  become: true
-  become_method: sudo
 
+# --------------------------------------------------
+# Docker GPG key (keyring-based, modern)
+# --------------------------------------------------
+
+- name: Ensure Docker keyring directory exists
+  become: true
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Docker GPG key
+  become: true
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.gpg
+    mode: '0644'
