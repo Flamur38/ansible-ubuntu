@@ -73,7 +73,6 @@ ansible-playbook -i inventory/local playbooks/site.yml --check
   - uBlock Origin
   - FoxyProxy
   - Multi-Account Containers
-- Policy-driven configuration (no user interaction)
 
 🔐 burp
 - Installs NSS tools
@@ -145,20 +144,6 @@ ansible-lint
 # ✔ Profile: production
 ```
 
-
-🔒 Security Notes
-- Firefox is snap-proof
-- Enterprise policies enforce extensions
-- Burp CA imported safely
-- No secrets stored in repo
-- Clear separation of user vs root config
-
-🧠 Design Philosophy
-- This project favors:
-- Explicit over magic
-- Policies over clicks
-- Reproducibility over convenience
-- Linting over “works on my machine”
 
 📌 Tested On
 - Ubuntu 24.04 (VM & bare metal)
