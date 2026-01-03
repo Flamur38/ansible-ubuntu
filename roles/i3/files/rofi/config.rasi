@@ -1,114 +1,79 @@
-configuration {
-    modi: "drun,run,window,ssh";
-    show-icons: true;
-    icon-theme: "Yaru";
-    font: "Ubuntu 12";
-}
-
 * {
-    bg:     #1E1E1E;
-    fg:     #EDEDED;
-    fg-alt: #AAAAAA;
-    accent: #E95420;
+    bg:            #191724;
+    bg-alt:        #1f1d2e;
+    bg-selected:   #26233a;
+
+    fg:            #e0def4;
+    fg-alt:        #908caa;
+    fg-selected:   #c4a7e7;
+
+    border-color:  #c4a7e7;
+    urgent:        #eb6f92;
+    highlight:     #9ccfd8;
+
+    // font: "JetBrainsMono Nerd Font 18";
 }
 
 window {
-    width: 45%;
-    padding: 20px;
-    border: 0;
-    border-radius: 12px;
     background-color: @bg;
+    border: 3px;
+    border-color: @border-color;
+    border-radius: 10px;
+    padding: 20px;
+    width: 45%;
 }
 
 mainbox {
-    spacing: 10px;
+    background-color: @bg;
 }
 
 inputbar {
-    padding: 12px;
-    spacing: 10px;
-    border-radius: 10px;
-    background-color: @bg;
+    background-color: @bg-alt;
+    text-color: @fg;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0px 0px 12px 0px;
 }
 
 prompt {
-    text-color: @accent;
+    text-color: @highlight;
+    padding: 0px 10px 0px 0px;
 }
 
-entry {
-    text-color: @fg;
-    placeholder: "Search…";
-    placeholder-color: @fg-alt;
+textbox-prompt-colon {
+    text-color: @highlight;
+    expand: false;
+    str: ":";
 }
 
 listview {
-    lines: 10;
-    spacing: 6px;
     background-color: @bg;
-    border: 0;
+    spacing: 6px;
+    scrollbar: false;
 }
 
 element {
+    background-color: @bg;
+    text-color: @fg;
     padding: 10px;
-    spacing: 10px;
     border-radius: 8px;
+}
+
+element selected {
+    background-color: @bg-selected;
+    text-color: @fg-selected;
+}
+
+element urgent {
     background-color: @bg;
-    text-color: @fg;
-    border: 0;
-}
-
-/* NORMAL */
-element normal.normal {
-    background-color: @bg;
-    text-color: @fg;
-}
-
-/* ALTERNATE (KILLS WHITE STRIPES) */
-element alternate.normal {
-    background-color: @bg;
-    text-color: @fg;
-}
-
-/* SELECTED */
-element selected.normal {
-    background-color: @accent;
-    text-color: #FFFFFF;
-}
-
-/* URGENT */
-element urgent.normal {
-    background-color: #C01C28;
-    text-color: #FFFFFF;
-}
-
-element-icon {
-    size: 28px;
+    text-color: @urgent;
 }
 
 element-text {
-    vertical-align: 0.5;
+    highlight: bold;
 }
 
-mode-switcher {
-    spacing: 10px;
-}
-
-button {
-    padding: 8px 14px;
-    border-radius: 8px;
-    background-color: @bg;
-    text-color: @fg;
-    border: 0;
-}
-
-button selected {
-    background-color: @accent;
-    text-color: #FFFFFF;
-}
-
-/* REMOVE SCROLLBAR LINE */
 scrollbar {
-    width: 0;
-    handle-width: 0;
-    background-color: transparent;
+    handle-color: @border-color;
+    background-color: @bg-alt;
 }
