@@ -154,74 +154,45 @@ bindsym $modkey+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $modkey+minus scratchpad show
 
-# Enable the setion below to fetch all the colors from Xresources
-#set_from_resource $xforeground foreground
-#set_from_resource $xbackground background
-#set_from_resource $xcursor cursorColor
-#set_from_resource $xcolor0 color0
-#set_from_resource $xcolor8 color8
-#set_from_resource $xcolor1 color1
-#set_from_resource $xcolor9 color9
-#set_from_resource $xcolor2 color2
-#set_from_resource $xcolor10 color10
-#set_from_resource $xcolor3 color3
-#set_from_resource $xcolor11 color11
-#set_from_resource $xcolor4 color4
-#set_from_resource $xcolor12 color12
-#set_from_resource $xcolor5 color5
-#set_from_resource $xcolor13 color13
-#set_from_resource $xcolor6 color6
-#set_from_resource $xcolor14 color14
-#set_from_resource $xcolor7 color7
-#set_from_resource $xcolor15 color15
-
 # ============================
-# Rose-Pine Theme
+# Ubuntu Yaru Dark Theme
 # ============================
 
-set $base      #191724
-set $surface   #1f1d2e
-set $overlay   #26233a
-set $muted     #6e6a86
-set $subtle    #908caa
-set $text      #e0def4
-set $love      #eb6f92
-set $gold      #f6c177
-set $rose      #ebbcba
-set $pine      #31748f
-set $foam      #9ccfd8
-set $iris      #c4a7e7
+set $bg        #2C2C2C
+set $surface   #333333
+set $border    #3D3D3D
+set $text      #EEEEEE
+set $subtle    #B0B0B0
+set $orange    #E95420
+set $orange_d  #C34113
+set $red       #ED3146
+set $green     #33D17A
+set $blue      #3584E4
 
 # Xresources compatibility
-set $xbackground $base
+set $xbackground $bg
 set $xforeground $text
 set $xcursor     $text
-set $xcolor0     $overlay
-set $xcolor1     $love
-set $xcolor2     $pine
-set $xcolor3     $gold
-set $xcolor4     $foam
-set $xcolor5     $iris
-set $xcolor6     $rose
-set $xcolor7     $subtle
-set $xcolor8     $muted
-set $xcolor9     $love
-set $xcolor10    $pine
-set $xcolor11    $gold
-set $xcolor12    $foam
-set $xcolor13    $iris
-set $xcolor14    $rose
+set $xcolor0     $bg
+set $xcolor1     $red
+set $xcolor2     $green
+set $xcolor3     $orange
+set $xcolor4     $blue
+set $xcolor5     $orange_d
+set $xcolor6     $green
+set $xcolor7     $text
+set $xcolor8     $border
 set $xcolor15    $text
 
 # ============================
 # i3 Window Colors
 # ============================
 
-client.focused          $iris     $surface   $text    $love
-client.focused_inactive $overlay  $base      $subtle  $overlay
-client.unfocused        $overlay  $base      $subtle  $overlay
-client.urgent           $love     $base      $text    $love
-client.placeholder      $overlay  $overlay   $subtle  $overlay
+client.focused          $orange   $surface   $text    $orange
+client.focused_inactive $border   $bg        $subtle  $border
+client.unfocused        $border   $bg        $subtle  $border
+client.urgent           $red      $bg        $text    $red
+client.placeholder      $border   $border    $subtle  $border
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -314,15 +285,15 @@ bar {
         position top
         strip_workspace_numbers yes
         font pango: Terminus (TTF) medium 25
-        separator_symbol "  "
+        separator_symbol "]["
 
         colors {
-            background  $base
+            background  $bg
                 statusline  $text
 
-                focused_workspace   $base     $iris     $base
-                urgent_workspace    $base     $love     $base
-                inactive_workspace  $base     $overlay  $subtle
+                focused_workspace   $orange   $orange   $bg
+                urgent_workspace    $red      $red      $bg
+                inactive_workspace  $bg       $border   $subtle
         }
 }
 

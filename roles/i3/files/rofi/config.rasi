@@ -1,79 +1,104 @@
+configuration {
+    modi: "run,drun,window";
+    show-icons: true;
+    font: "Ubuntu 22";
+    drun-display-format: "{name}";
+    sidebar-mode: false;
+}
+
 * {
-    bg:            #191724;
-    bg-alt:        #1f1d2e;
-    bg-selected:   #26233a;
-
-    fg:            #e0def4;
-    fg-alt:        #908caa;
-    fg-selected:   #c4a7e7;
-
-    border-color:  #c4a7e7;
-    urgent:        #eb6f92;
-    highlight:     #9ccfd8;
-
-    // font: "JetBrainsMono Nerd Font 18";
+    bg:         #2C2C2C;
+    bg-alt:     #333333;
+    border:     #3D3D3D;
+    text:       #EEEEEE;
+    text-muted: #B0B0B0;
+    orange:     #E95420;
+    red:        #ED3146;
+    green:      #33D17A;
 }
 
 window {
     background-color: @bg;
-    border: 3px;
-    border-color: @border-color;
+    border: 2px;
+    border-color: @border;
     border-radius: 10px;
     padding: 20px;
-    width: 45%;
+    width: 50%;
 }
 
 mainbox {
-    background-color: @bg;
+    spacing: 12px;
 }
 
 inputbar {
+    children: [ prompt, entry ];
     background-color: @bg-alt;
-    text-color: @fg;
-    padding: 10px;
     border-radius: 8px;
-    margin: 0px 0px 12px 0px;
+    padding: 12px;
 }
 
 prompt {
-    text-color: @highlight;
-    padding: 0px 10px 0px 0px;
+    text-color: @orange;
+    padding: 0px 10px 0px 5px;
 }
 
-textbox-prompt-colon {
-    text-color: @highlight;
-    expand: false;
-    str: ":";
+entry {
+    text-color: @text;
+    placeholder: "Search...";
+    placeholder-color: @text-muted;
 }
 
 listview {
     background-color: @bg;
     spacing: 6px;
-    scrollbar: false;
+    lines: 10;
+    padding: 10px;
 }
 
 element {
-    background-color: @bg;
-    text-color: @fg;
     padding: 10px;
-    border-radius: 8px;
-}
-
-element selected {
-    background-color: @bg-selected;
-    text-color: @fg-selected;
-}
-
-element urgent {
-    background-color: @bg;
-    text-color: @urgent;
+    border-radius: 6px;
+    background-color: transparent;
+    text-color: @text;
 }
 
 element-text {
-    highlight: bold;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element selected {
+    background-color: @orange;
+    text-color: #FFFFFF;
+}
+
+element selected.normal {
+    background-color: @orange;
+}
+
+element normal {
+    background-color: transparent;
+}
+
+element urgent {
+    background-color: @red;
+    text-color: #FFFFFF;
 }
 
 scrollbar {
-    handle-color: @border-color;
-    background-color: @bg-alt;
+    width: 6px;
+    handle-color: @orange;
+    handle-width: 6px;
+    background-color: @border;
 }
+
+message {
+    background-color: @bg-alt;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+textbox {
+    text-color: @text;
+}
+

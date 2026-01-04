@@ -2,11 +2,14 @@ general {
     colors = true
     interval = 5
     separator = "  "
-    color_good = "#9ccfd8"
-    color_degraded = "#f6c177"
-    color_bad = "#eb6f92"
+
+    # Ubuntu Yaru colors
+    color_good = "#33D17A"     # green
+    color_degraded = "#E95420" # ubuntu orange
+    color_bad = "#ED3146"     # red
 }
 
+# Order in bar
 order += "ethernet tun0"
 order += "ethernet _first_"
 order += "disk /"
@@ -59,3 +62,4 @@ memory {
 tztime local {
     format = "󰥔  %Y-%m-%d  %H:%M:%S"
 }
+
