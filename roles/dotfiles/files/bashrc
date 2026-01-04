@@ -69,30 +69,23 @@ git_ps1() {
   branch=$(git branch --show-current 2>/dev/null) || return
 
   if git diff --quiet 2>/dev/null; then
-    # clean repo → green
-    printf "\033[38;5;82m[%s]\033[0m" "$branch"
+    # clean repo → Ubuntu green
+    printf "\033[38;5;78m[%s]\033[0m" "$branch"
   else
-    # dirty repo → red
+    # dirty repo → Ubuntu red
     printf "\033[38;5;196m[%s]\033[0m" "$branch"
   fi
 }
 
+
 # -------------------------------
 # Prompt
 # -------------------------------
-# PS1="\[\e[0;35m\][\$(date +\"%d-%b-%y %T %Z\")] \
-# \[\e[38;5;110m\]\w \$(git_ps1)\n\
-# \[\e[38;5;208m\]>>> \[\e[0m\]"
-
-
-PS1="\[\e[0;34m\][\$(date +\"%d-%b-%y %T %Z\")] \
+PS1="\[\e[38;5;75m\][\$(date +\"%d-%b-%y %T %Z\")] \
 \[\e[38;5;231m\]\w \$(git_ps1)\n\
-\[\e[0;31m\]>>> \[\e[0m\]"
+\[\e[38;5;208m\]>>> \[\e[0m\]"
 
 
-# PS1="\[\e[38;5;109m\][\$(date +\"%d-%b-%y %T %Z\")] \
-# \[\e[38;5;245m\]\w \$(git_ps1)\n\
-# \[\e[38;5;81m\]>>> \[\e[0m\]"
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
