@@ -38,6 +38,7 @@
       - suricata
       - auditd
       - fail2ban
+      - scalpel
     state: present
 
 # --------------------------------------------------
