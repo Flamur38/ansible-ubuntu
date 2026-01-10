@@ -29,6 +29,7 @@
       - ntpdate
       - flameshot
       - terminator
+      - net-tools 
     state: present
 
 # --------------------------------------------------
