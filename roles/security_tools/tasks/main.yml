@@ -68,3 +68,15 @@
       - binwalk
       - binutils
     state: present
+
+
+# --------------------------------------------------
+# SNAP Packages 
+# --------------------------------------------------
+- name: Installing Snap Packages
+  become: true
+  ansible.builtin.snap:
+    name:
+      - volatility
+    state: present
+
