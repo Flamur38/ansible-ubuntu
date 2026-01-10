@@ -1,6 +1,6 @@
 ---
 # ==================================================
-# GNOME Terminal (Flamy profile)
+# GNOME Terminal (Flamy + Incident profiles)
 # ==================================================
 
 - name: Install GNOME Terminal
@@ -18,10 +18,13 @@
     group: "{{ ansible_env.SUDO_USER }}"
     mode: "0755"
 
-- name: Register flamy terminal profile UUID
+- name: Register GNOME Terminal profiles
   become: false
   ansible.builtin.shell: |
-    dconf write /org/gnome/terminal/legacy/profiles:/list "['b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10']"
+    dconf write /org/gnome/terminal/legacy/profiles:/list "[
+      'b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10',
+      'c7d9f0f2-9c33-4c3e-9b63-3f63a3c55c44'
+    ]"
   environment:
     HOME: "/home/{{ ansible_env.SUDO_USER }}"
     USER: "{{ ansible_env.SUDO_USER }}"
@@ -34,10 +37,20 @@
     HOME: "/home/{{ ansible_env.SUDO_USER }}"
     USER: "{{ ansible_env.SUDO_USER }}"
 
-- name: Install flamy GNOME Terminal profile
+- name: Load flamy profile
   become: false
   ansible.builtin.shell: |
     dconf load /org/gnome/terminal/legacy/profiles:/:b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10/ < {{ role_path }}/files/flamy-profile.conf
+  args:
+    executable: /bin/bash
+  environment:
+    HOME: "/home/{{ ansible_env.SUDO_USER }}"
+    USER: "{{ ansible_env.SUDO_USER }}"
+
+- name: Load incident profile
+  become: false
+  ansible.builtin.shell: |
+    dconf load /org/gnome/terminal/legacy/profiles:/:c7d9f0f2-9c33-4c3e-9b63-3f63a3c55c44/ < {{ role_path }}/files/incident-profile.conf
   args:
     executable: /bin/bash
   environment:
