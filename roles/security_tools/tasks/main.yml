@@ -39,6 +39,7 @@
       - auditd
       - fail2ban
       - scalpel
+      - steghide
     state: present
 
 # --------------------------------------------------
