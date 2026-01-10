@@ -62,29 +62,33 @@ if [ "$color_prompt" = yes ]; then
 
 
 # -------------------------------
-# Git branch with color
+# Git branch with Sublime colors
 # -------------------------------
 git_ps1() {
   local branch
   branch=$(git branch --show-current 2>/dev/null) || return
 
   if git diff --quiet 2>/dev/null; then
-    # clean repo → Ubuntu green
-    printf "\033[38;5;78m[%s]\033[0m" "$branch"
+    # Sublime green  #99c794
+    printf "\e[00m[%s]\e[0m" "$branch"
   else
-    # dirty repo → Ubuntu red
-    printf "\033[38;5;196m[%s]\033[0m" "$branch"
+    # Sublime red  #ec5f66
+    printf "\e[38;2;236;95;102m[%s]\e[0m" "$branch"
   fi
 }
 
-
 # -------------------------------
-# Prompt
+# Sublime PS1
 # -------------------------------
-PS1="\[\e[38;5;75m\][\$(date +\"%d-%b-%y %T %Z\")] \
-\[\e[38;5;231m\]\w \$(git_ps1)\n\
-\[\e[38;5;208m\]>>> \[\e[0m\]"
+PS1="\[\e[0;31m\][\$(date +\"%d-%b-%y %T %Z\")] \
+\[\e[1;38;5;26m\]\w \$(git_ps1)\n\
+\[\e[1;38;5;245m\]>>> $ \[\e[0m\]"
 
+# PS1: 18:47:11 flamy:Documents (main)$
+# PS1="\[\e[31m\]\$(date +\"%H:%M:%S\")\[\e[0m\] \
+# \[\e[1;38;5;26m\]\u\[\e[0m\]:\
+# \[\e[1;38;5;245m\]\W\[\e[0m\] \
+# \[\e[00m\]\$(git_ps1 '(%s)')\[\e[0m\]\$ "
 
 
 else

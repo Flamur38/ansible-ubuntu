@@ -1,102 +1,45 @@
 ---
 # ==================================================
-# GNOME Terminal – configure DEFAULT profile only
+# GNOME Terminal (Flamy profile)
 # ==================================================
 
-# --------------------------------------------------
-# Get default GNOME Terminal profile UUID
-# --------------------------------------------------
-- name: Get default GNOME Terminal profile UUID
-  ansible.builtin.command:
-    cmd: gsettings get org.gnome.Terminal.ProfilesList default
-  register: terminal_default_profile
-  changed_when: false
+- name: Install GNOME Terminal
+  become: true
+  ansible.builtin.apt:
+    name: gnome-terminal
+    state: present
+    update_cache: true
 
-- name: Set terminal profile UUID fact
-  ansible.builtin.set_fact:
-    terminal_profile_uuid: "{{ terminal_default_profile.stdout | trim | trim(\"'\") }}"
+- name: Ensure .config exists for user
+  ansible.builtin.file:
+    path: "/home/{{ ansible_env.SUDO_USER }}/.config"
+    state: directory
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: "0755"
 
-# --------------------------------------------------
-# Global terminal settings
-# --------------------------------------------------
-- name: Disable terminal menubar
-  ansible.builtin.command:
-    cmd: gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
-  changed_when: false
+- name: Register flamy terminal profile UUID
+  become: false
+  ansible.builtin.shell: |
+    dconf write /org/gnome/terminal/legacy/profiles:/list "['b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10']"
+  environment:
+    HOME: "/home/{{ ansible_env.SUDO_USER }}"
+    USER: "{{ ansible_env.SUDO_USER }}"
 
-# --------------------------------------------------
-# Profile-specific settings
-# --------------------------------------------------
-- name: Disable terminal bell
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      audible-bell false
-  changed_when: false
+- name: Set flamy as default GNOME Terminal profile
+  become: false
+  ansible.builtin.shell: |
+    dconf write /org/gnome/terminal/legacy/profiles:/default "'b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10'"
+  environment:
+    HOME: "/home/{{ ansible_env.SUDO_USER }}"
+    USER: "{{ ansible_env.SUDO_USER }}"
 
-- name: Enable custom font
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      use-system-font false
-  changed_when: false
-
-- name: Set font to Monospace 15
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      font 'Monospace 15'
-  changed_when: false
-
-- name: Disable theme colors
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      use-theme-colors false
-  changed_when: false
-
-- name: Set terminal foreground color
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      foreground-color '#D3D7CF'
-  changed_when: false
-
-- name: Set terminal background color
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      background-color '#1E1E1E'
-  changed_when: false
-
-- name: Enable cursor colors
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      cursor-colors-set true
-  changed_when: false
-
-- name: Set cursor color (Ubuntu orange)
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      cursor-background-color '#E95420'
-  changed_when: false
-
-- name: Set Ubuntu/Yaru color palette
-  ansible.builtin.command:
-    cmd: >
-      gsettings set
-      org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ terminal_profile_uuid }}/
-      palette "['#2E3436', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8',
-                '#34E2E2', '#EEEEEC', '#555753', '#CC0000', '#73D216', '#EDD400',
-                '#3465A4', '#75507B', '#06989A', '#D3D7CF']"
-  changed_when: false
+- name: Install flamy GNOME Terminal profile
+  become: false
+  ansible.builtin.shell: |
+    dconf load /org/gnome/terminal/legacy/profiles:/:b1e3e5d0-ffaf-4b77-9a44-7f9c3b0a7f10/ < {{ role_path }}/files/flamy-profile.conf
+  args:
+    executable: /bin/bash
+  environment:
+    HOME: "/home/{{ ansible_env.SUDO_USER }}"
+    USER: "{{ ansible_env.SUDO_USER }}"
