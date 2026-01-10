@@ -1,104 +1,114 @@
 configuration {
-    modi: "run,drun,window";
-    show-icons: true;
-    font: "Ubuntu 22";
-    drun-display-format: "{name}";
-    sidebar-mode: false;
+    modi: "drun,run,window,ssh";
+    // show-icons: true;
+    icon-theme: "Yaru";
+    font: "Ubuntu 12";
 }
 
 * {
-    bg:         #2C2C2C;
-    bg-alt:     #333333;
-    border:     #3D3D3D;
-    text:       #EEEEEE;
-    text-muted: #B0B0B0;
-    orange:     #E95420;
-    red:        #ED3146;
-    green:      #33D17A;
+    bg:     #1E1E1E;
+    fg:     #EDEDED;
+    fg-alt: #AAAAAA;
+    accent: #E95420;
 }
 
 window {
-    background-color: @bg;
-    border: 2px;
-    border-color: @border;
-    border-radius: 10px;
+    width: 45%;
     padding: 20px;
-    width: 50%;
+    border: 0;
+    border-radius: 12px;
+    background-color: @bg;
 }
 
 mainbox {
-    spacing: 12px;
+    spacing: 10px;
 }
 
 inputbar {
-    children: [ prompt, entry ];
-    background-color: @bg-alt;
-    border-radius: 8px;
     padding: 12px;
+    spacing: 10px;
+    border-radius: 10px;
+    background-color: @bg;
 }
 
 prompt {
-    text-color: @orange;
-    padding: 0px 10px 0px 5px;
+    text-color: @accent;
 }
 
 entry {
-    text-color: @text;
-    placeholder: "Search...";
-    placeholder-color: @text-muted;
+    text-color: @fg;
+    placeholder: "Search…";
+    placeholder-color: @fg-alt;
 }
 
 listview {
-    background-color: @bg;
-    spacing: 6px;
     lines: 10;
-    padding: 10px;
+    spacing: 6px;
+    background-color: @bg;
+    border: 0;
 }
 
 element {
     padding: 10px;
-    border-radius: 6px;
-    background-color: transparent;
-    text-color: @text;
+    spacing: 10px;
+    border-radius: 8px;
+    background-color: @bg;
+    text-color: @fg;
+    border: 0;
+}
+
+/* NORMAL */
+element normal.normal {
+    background-color: @bg;
+    text-color: @fg;
+}
+
+/* ALTERNATE (KILLS WHITE STRIPES) */
+element alternate.normal {
+    background-color: @bg;
+    text-color: @fg;
+}
+
+/* SELECTED */
+element selected.normal {
+    background-color: @accent;
+    text-color: #FFFFFF;
+}
+
+/* URGENT */
+element urgent.normal {
+    background-color: #C01C28;
+    text-color: #FFFFFF;
+}
+
+element-icon {
+    size: 28px;
 }
 
 element-text {
-    background-color: transparent;
-    text-color: inherit;
+    vertical-align: 0.5;
 }
 
-element selected {
-    background-color: @orange;
+mode-switcher {
+    spacing: 10px;
+}
+
+button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    background-color: @bg;
+    text-color: @fg;
+    border: 0;
+}
+
+button selected {
+    background-color: @accent;
     text-color: #FFFFFF;
 }
 
-element selected.normal {
-    background-color: @orange;
-}
-
-element normal {
-    background-color: transparent;
-}
-
-element urgent {
-    background-color: @red;
-    text-color: #FFFFFF;
-}
-
+/* REMOVE SCROLLBAR LINE */
 scrollbar {
-    width: 6px;
-    handle-color: @orange;
-    handle-width: 6px;
-    background-color: @border;
+    width: 0;
+    handle-width: 0;
+    background-color: transparent;
 }
-
-message {
-    background-color: @bg-alt;
-    border-radius: 6px;
-    padding: 10px;
-}
-
-textbox {
-    text-color: @text;
-}
-
