@@ -76,9 +76,7 @@
 - name: Installing Snap Packages
   become: true
   ansible.builtin.snap:
-    name: "{{ item.name }}"
-    classic: "{{ item.classic | default(false) }}"
+    name: 
+      - volatility-phocean
+      - autopsy
     state: present
-  loop:
-    - name: volatility-phocean
-      classic: true
