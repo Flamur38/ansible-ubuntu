@@ -58,8 +58,6 @@ fi
 
 if [ "$color_prompt" = yes ]; then
   # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-# PS1="\[\e[0;36m\][\$(date +\"%d-%b-%y %T %Z\")] \[\e[0;38;5;26m\]\w\n\[\e[1;38;5;210m\]>>> $ \[\e[00m\]"
-
 
 # -------------------------------
 # Git branch with Sublime colors
@@ -70,7 +68,7 @@ git_ps1() {
 
   if git diff --quiet 2>/dev/null; then
     # Sublime green  #99c794
-    printf "\e[00m[%s]\e[0m" "$branch"
+    printf "\e[0;32m[%s]\e[0m" "$branch"
   else
     # Sublime red  #ec5f66
     printf "\e[38;2;236;95;102m[%s]\e[0m" "$branch"
@@ -80,11 +78,12 @@ git_ps1() {
 # -------------------------------
 # Sublime PS1
 # -------------------------------
-PS1="\[\e[0;31m\][\$(date +\"%d-%b-%y %T %Z\")] \
-\[\e[1;38;5;26m\]\w \$(git_ps1)\n\
-\[\e[1;38;5;245m\]>>> $ \[\e[0m\]"
+PS1="\[\e[0;35m\][\$(date +\"%d-%b-%y %T %Z\")] \
+\[\e[0;34m\]\w \$(git_ps1)\
+\[\e[1;38;5;190m\]
+>>> \[\e[00m\]"
 
-# PS1: 18:47:11 flamy:Documents (main)$
+# OneLiner # PS1: 18:47:11 flamy:Documents (main)$
 # PS1="\[\e[31m\]\$(date +\"%H:%M:%S\")\[\e[0m\] \
 # \[\e[1;38;5;26m\]\u\[\e[0m\]:\
 # \[\e[1;38;5;245m\]\W\[\e[0m\] \
