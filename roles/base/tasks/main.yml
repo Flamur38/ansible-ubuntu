@@ -27,6 +27,24 @@
       - unzip
       - gnupg
       - lsb-release
+      - python3
+      - python3-pip
+      - tcpdump
+      - htop
+      - dirb
+      - whois
+      - rdesktop
+      - nodejs
+      - ripgrep
+      - fd-find
+      - xclip
+      - flameshot
+      - feh
+      - picom
+      - arandr
+      - tshark
+      - dhclient
+      - polybar
     state: present
 
 # --------------------------------------------------
