@@ -43,7 +43,6 @@
       - picom
       - arandr
       - tshark
-      - dhclient
       - polybar
     state: present
 

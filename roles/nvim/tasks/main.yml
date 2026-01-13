@@ -64,3 +64,27 @@
   args:
     creates: "/home/{{ ansible_env.SUDO_USER }}/.local/share/nvim/lazy"
   changed_when: false
+
+- name: Install pipx
+  become: true
+  ansible.builtin.apt:
+    name: pipx
+    state: present
+
+# --------------------------------------------------
+# "pipx" Install tools for python 
+# --------------------------------------------------
+- name: Ensure pipx path
+  ansible.builtin.shell: pipx ensurepath
+  changed_when: false
+
+- name: Install Python dev tools via pipx
+  ansible.builtin.shell: |
+    pipx install flake8
+    pipx install pylint
+    pipx install black
+    pipx install autopep8
+    pipx install pytest
+  args:
+    creates: ~/.local/bin/black
+
